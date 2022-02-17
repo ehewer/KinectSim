@@ -3,15 +3,17 @@ import argparse
 
 # constants
 SAMPLE_RATE = 24    # number of data points per second
-VAR_LIMIT = 0.05   # variance limit per data point
+VAR_LIMIT = 0.05    # variance limit per data point
 
 # parse command line for filename
 parser = argparse.ArgumentParser(description="Generate plaintext Kinect body tracking data.")
 parser.add_argument("filename", help="The name of the file to be generated")
 args = parser.parse_args()
 
-# write to file
-def generate_text(filename):
+def generate_file(filename):
+    """
+    Writes a list of Kinect data points to a plaintext file.
+    """
     if filename is None:
         print("ERROR: Please specify a filename.")
         return
@@ -23,7 +25,8 @@ def generate_text(filename):
 
         # create set of strings to be written into file
         filetext = ["Start of generated Kinect data.\n"]
-        # EXAMPLE
+
+        # EXAMPLE (REPLACE WITH YOUR DESIRED LINES)
         filetext.extend(create_straight_line(0.0, 0.0, 5.0, 5.0, 6))
         filetext.extend(create_straight_line(5.0, 5.0, 5.0, 0.0, 4))
 
@@ -34,8 +37,20 @@ def generate_text(filename):
     
     print("File sucessfully generated.")
 
-# returns a list of strings to be appended to the filetext
+
 def create_straight_line(x1, y1, x2, y2, sec, sample_rate=SAMPLE_RATE, variance=True):
+    """
+    Returns a list of strings to be extended to the filetext.
+
+    Parameters:
+        x1, y1 `float`: coordinates of the first point
+        x2, y2 `float`: coordinates of the second point
+        sec `int`: number of seconds to travel between points
+    
+    Returns:
+        filetext `list[str]`: list of strings representing Kinect data points
+
+    """
     print("Generating line from (" + str(x1) + ", " + str(y1) + ") to (" + str(x2) + ", " + str(y2) + ")")
 
     x_pos = x1
@@ -59,4 +74,4 @@ def create_straight_line(x1, y1, x2, y2, sec, sample_rate=SAMPLE_RATE, variance=
 
 
 if __name__ == "__main__":
-    generate_text(args.filename)
+    generate_file(args.filename)
